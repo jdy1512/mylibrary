@@ -65,6 +65,8 @@ public class Encrypt {
 		byte[] l = new byte[32];
 		byte[] r = new byte[32];
 		byte[] e = new byte[48];
+		byte[] ex_key = new byte[48];
+		byte[] ex_l = new byte[32];
 		ArrayList<Byte> s = new ArrayList<Byte>();
 		byte[] p = new byte[32];
 	}
@@ -76,19 +78,44 @@ public class Encrypt {
 
 		convert2(Keystore.INSTANCE.e, Keystore.INSTANCE.r, E);
 
-		viewConsole2(Keystore.INSTANCE.e);
-		
 		// exclusive e ^ secretkey
+		exclusive(Keystore.INSTANCE.ex_key, Keystore.INSTANCE.e, SECRET_KEY);
 
-		convert3(Keystore.INSTANCE.s, Keystore.INSTANCE.e, S);
+		viewConsole2(Keystore.INSTANCE.ex_key);
+
+		convert3(Keystore.INSTANCE.s, Keystore.INSTANCE.ex_key, S);
 
 		viewConsole3(Keystore.INSTANCE.s);
 
 		convert4(Keystore.INSTANCE.p, Keystore.INSTANCE.s, P);
 
-		viewConsole4(Keystore.INSTANCE.p);
-		
 		// exclusive p ^ l
+		exclusive(Keystore.INSTANCE.ex_l, Keystore.INSTANCE.p,
+				Keystore.INSTANCE.l);
+
+		viewConsole4(Keystore.INSTANCE.ex_l);
+
+		System.out.println();
+		
+		// l1
+		System.err.println("l1 : ");
+		for (byte b : Keystore.INSTANCE.r) {
+			System.err.print(b);
+		}
+		
+		System.err.println();
+		
+		// r1
+		System.err.println("r1 : ");
+		for (byte b : Keystore.INSTANCE.ex_l) {
+			System.err.print(b);
+		}
+	}
+
+	public static void exclusive(byte[] newTbl, byte[] oldTbl, byte[] key) {
+		for (int i = 0; i < oldTbl.length; i++) {
+			newTbl[i] = (byte) (oldTbl[i] ^ key[i]);
+		}
 	}
 
 	public static void convert(byte[] newTbl, byte[] oldTbl, byte[] targetTbl) {
@@ -111,7 +138,7 @@ public class Encrypt {
 	public static void convert3(ArrayList<Byte> newTbl, byte[] oldTbl,
 			byte[][] targetTbl) {
 		for (int i = 0; i < oldTbl.length; i++) {
-			if (i != 0 && i % 5 == 0) {
+			if (i != 0 && i % 6 == 5) {
 				int j = i / 6;
 				int k = oldTbl[i - 5] * 2 + oldTbl[i];
 				int l = oldTbl[i - 4] * 8 + oldTbl[i - 3] * 4 + oldTbl[i - 2]
@@ -119,18 +146,18 @@ public class Encrypt {
 
 				int num = targetTbl[j][k * 16 + l];
 
-				int org = 1, bin = 0;
+				int org = 1, bin = -1;
 				while (org <= num) {
 					org *= 2;
 					bin++;
 				}
 
 				int temp = bin;
-				while (temp < 4) {
+				while (temp < 3) {
 					++temp;
 					Keystore.INSTANCE.s.add((byte) 0);
 				}
-				while (bin > 0) {
+				while (bin >= 0) {
 					Keystore.INSTANCE.s.add((byte) (num >> bin & 1));
 					bin--;
 				}
@@ -146,7 +173,7 @@ public class Encrypt {
 	}
 
 	public static void viewConsole(byte[] tbl) {
-		System.out.println("--확인용--");
+		System.out.println("-- IP table--");
 		for (int i = 0; i < tbl.length; i++) {
 			if (i != 0 && i % 8 == 0) {
 				System.out.println();
@@ -157,7 +184,7 @@ public class Encrypt {
 	}
 
 	public static void viewConsole2(byte[] tbl) {
-		System.out.println("--확인용--");
+		System.out.println("-- E, xor --");
 		for (int i = 0; i < tbl.length; i++) {
 			if (i != 0 && i % 6 == 0) {
 				System.out.println();
@@ -168,7 +195,7 @@ public class Encrypt {
 	}
 
 	public static void viewConsole3(ArrayList<Byte> tbl) {
-		System.out.println("--확인용--");
+		System.out.println("-- s table --");
 		for (int i = 0; i < tbl.size(); i++) {
 			if (i != 0 && i % 4 == 0) {
 				System.out.println();
@@ -179,7 +206,7 @@ public class Encrypt {
 	}
 
 	public static void viewConsole4(byte[] tbl) {
-		System.out.println("--확인용--");
+		System.out.println("-- p, xor --");
 		for (int i = 0; i < tbl.length; i++) {
 			if (i != 0 && i % 4 == 0) {
 				System.out.println();
