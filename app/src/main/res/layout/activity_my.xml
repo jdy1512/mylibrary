@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#eeeeee"
+    tools:context=".MyActivity">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <include layout="@layout/sign_in_top_to_img_1" />
+
+        <include layout="@layout/sign_in_top_to_img_2" />
+
+        <include layout="@layout/sign_in_top_to_img_3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loginContainer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/container"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#4f6cbd"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/facebookLoginImg"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:background="@drawable/sign_in_login_f" />
+
+            <TextView
+                android:id="@+id/facebookLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:layout_toRightOf="@id/facebookLoginImg"
+                android:paddingLeft="11dp"
+                android:text="login"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#d7402a"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/googleLoginImg"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:background="@drawable/sign_in_login_g" />
+
+            <TextView
+                android:id="@+id/googleLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:layout_toRightOf="@id/googleLoginImg"
+                android:paddingLeft="11dp"
+                android:text="login"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

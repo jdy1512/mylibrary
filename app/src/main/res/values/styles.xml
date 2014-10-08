@@ -1,0 +1,70 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="sign_in_title">
+        <item name="android:textSize">33sp</item>
+        <item name="android:textColor">#f36712</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="sign_in_sub1">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#8b8c8e</item>
+        <item name="android:lineSpacingExtra">-20sp</item>
+    </style>
+
+    <style name="sign_in_step1">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#666769</item>
+        <item name="android:lineSpacingExtra">20sp</item>
+    </style>
+
+    <style name="sign_in_step1_sub">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#6d6e71</item>
+        <item name="android:lineSpacingExtra">-10sp</item>
+    </style>
+
+    <style name="sign_in_step2">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#666769</item>
+        <item name="android:lineSpacingExtra">20sp</item>
+    </style>
+
+    <style name="sign_in_step2_sub">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#6d6e71</item>
+        <item name="android:lineSpacingExtra">-10sp</item>
+    </style>
+
+    <style name="sign_in_step3">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#666769</item>
+        <item name="android:lineSpacingExtra">20sp</item>
+    </style>
+
+    <style name="sign_in_step3_sub">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#6d6e71</item>
+        <item name="android:lineSpacingExtra">-10sp</item>
+    </style>
+
+    <style name="sign_in_sub2">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#6d6e71</item>
+        <item name="android:maxLines">13</item>
+        <item name="android:lineSpacingExtra">-20sp</item>
+        <item name="android:verticalSpacing">23px</item>
+    </style>
+
+    <style name="sign_in_sub3">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#6d6e71</item>
+        <item name="android:lineSpacingExtra">-20sp</item>
+        <item name="android:verticalSpacing">23sp</item>
+    </style>
+</resources>
