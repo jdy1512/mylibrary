@@ -1,0 +1,7 @@
+public class KeyGeneration {
+	private static final int n = 24;
+
+	public static void main(String[] args) {
+		
+	}
+}

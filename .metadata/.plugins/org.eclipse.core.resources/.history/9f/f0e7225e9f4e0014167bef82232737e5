@@ -1,0 +1,23 @@
+public class KeyGeneration {
+	private static final int n = 24;
+
+	private static byte[] oddRan = new byte[n];
+
+	public static void main(String[] args) {
+		createODDRandomNoList();
+	}
+
+	public static void createODDRandomNoList() {
+		for (int i = 0; i < n; i++) {
+			if (i == n - 1) {
+				oddRan[i] = 1;
+				break;
+			}
+			if (Math.random() * 50 + 1 > 50) {
+				oddRan[i] = 1;
+			} else {
+				oddRan[i] = 0;
+			}
+		}
+	}
+}

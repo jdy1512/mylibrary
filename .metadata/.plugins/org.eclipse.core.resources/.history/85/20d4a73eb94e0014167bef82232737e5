@@ -1,0 +1,181 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class KeyGeneration {
+	private static final int nbit = 24;
+
+	private static int p, q;
+	private static BigInteger bigN, bigPI, bigE;
+	private static long e, d;
+
+	private static byte[] oddRan;
+	private static byte[] oddRan_p = new byte[nbit];
+	private static byte[] oddRan_q = new byte[nbit];
+	private static boolean pChk = false;
+	private static boolean qChk = false;
+	private static ArrayList<Integer> PRIME_LIST;
+
+	public static void main(String[] args) {
+		// ---------------------------------------
+		// 소수 가져오기
+		getPrimeList();
+
+		// pq 생성
+		createPQ();
+
+		// 확인용
+		viewConsole();
+
+		// ----------------------------------------
+		// n = p * q;
+		bigN = BigInteger.valueOf(p).multiply(BigInteger.valueOf(q));
+		System.out.println("n : " + bigN);
+		// pi = (p - 1) * (q - 1);
+
+		bigPI = BigInteger.valueOf(p - 1).multiply(BigInteger.valueOf(q - 1));
+		System.out.println("pi : " + bigPI);
+		
+		while ((bigE = bigPI.gcd(BigInteger.probablePrime(bigPI.bitCount(), new Random()))).equals(BigInteger.ONE)) {
+			;
+		}
+		System.out.println("e : " + bigE);
+//		while ((bigE = gcd(bigPI, BigInteger.probablePrime(bigPI.bitCount(), rnd))).equals(BigInteger.ONE)) {
+//			rnd = new Random();
+//		}
+//		while ((e = gcd(pi, (long) (Math.random() * (pi - 1)) + 1)) == 1) {
+//			;
+//		}
+//
+//		int cnt = 1;
+//		long t;
+//		while ((t = ((pi * cnt) + 1)) % e == 0) {
+//			++cnt;
+//		}
+//		d = t / e;
+//		System.out.println("d : " + d);
+	}
+	public static BigInteger gcd(BigInteger p, BigInteger q) {
+		System.out.println(p);
+		System.out.println(q);
+		if (q.equals(BigInteger.ZERO))
+			return p;
+		else
+			return gcd(q, p.mod(q));
+	}
+
+//	public static long gcd(long p, long q) {
+//		if (q == 0)
+//			return p;
+//		else
+//			return gcd(q, p % q);
+//	}
+
+	public static void createPQ() {
+		// p, q 생성
+		while (!pChk || !qChk) {
+			// 랜덤 수 생성
+			createODDRandomNoList();
+			// 소수 체크
+			if (!pChk)
+				createPrime(p);
+			else
+				createPrime(q);
+		}
+	}
+
+	public static void createPrime(int no) {
+		for (int i = 0; i < PRIME_LIST.size(); i++) {
+			if (i == PRIME_LIST.size() - 1) {
+				if (!pChk)
+					pChk = !pChk;
+				else
+					qChk = !qChk;
+				break;
+			}
+			if (no % PRIME_LIST.get(i) == 0) {
+				break;
+			}
+		}
+	}
+
+	public static void getPrimeList() {
+		PRIME_LIST = new ArrayList<Integer>();
+
+		File file = new File("C:/Users/C3-23/Desktop/p.txt");
+		FileReader fr = null;
+		BufferedReader br = null;
+		try {
+			fr = new FileReader(file);
+			br = new BufferedReader(fr);
+
+			String str;
+			while ((str = br.readLine()) != null) {
+				int num = Integer.parseInt(str);
+				if (num > 8192)
+					break;
+				PRIME_LIST.add(num);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public static void createODDRandomNoList() {
+		String str = "";
+		oddRan = new byte[nbit];
+		for (int i = 0; i < nbit; i++) {
+			if (i == 0) {
+				oddRan[i] = 1;
+				str += oddRan[i];
+				continue;
+			}
+			if (i == nbit - 1) {
+				oddRan[i] = 1;
+				str += oddRan[i];
+				break;
+			}
+			if (Math.random() * 100 + 1 > 50) {
+				oddRan[i] = 1;
+			} else {
+				oddRan[i] = 0;
+			}
+			str += oddRan[i];
+		}
+		if (!pChk) {
+			p = Integer.parseInt(str, 2);
+			oddRan_p = oddRan;
+		} else {
+			q = Integer.parseInt(str, 2);
+			oddRan_q = oddRan;
+			oddRan = null;
+		}
+	}
+
+	public static void viewConsole() {
+		System.out.println("p : " + p);
+
+//		for (int i = 0; i < oddRan_p.length; i++) {
+//			System.out.print(oddRan_p[i]);
+//		}
+//		System.out.println();
+
+		System.out.println("q : " + q);
+//		for (int i = 0; i < oddRan_q.length; i++) {
+//			System.out.print(oddRan_q[i]);
+//		}
+//		System.out.println();
+	}
+}

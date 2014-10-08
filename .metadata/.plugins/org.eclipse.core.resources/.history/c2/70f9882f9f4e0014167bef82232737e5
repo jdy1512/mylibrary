@@ -1,0 +1,15 @@
+public class KeyGeneration {
+	private static final int n = 24;
+
+	private byte[] oddRan = new byte[n];
+
+	public static void main(String[] args) {
+		createODDRandomNoList();
+	}
+
+	public static void createODDRandomNoList() {
+		for (int i = 0; i < n; i++) {
+			
+		}
+	}
+}
