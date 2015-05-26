@@ -1,5 +1,0 @@
-package spring.mvc.interceptor;
-
-public class FirstInterceptor {
-
-}
