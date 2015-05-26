@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+	<!-- Address의 객체 설정 -->
+	<!-- 객체 설정 : <bean> name/id - 식별값, class - 생성할 객체의 클래스 등록(패키지명+class명) -->
+	<!-- no-arg 생성자를 이용해 객체 생성 -->
+	<bean id="address1" class="spring.di.vo.Address"/>
+	<!-- 생성자를 이용해 값을 넣어 객체 생성 -->
+	<bean id="address2" class="spring.di.vo.Address">
+	    <!-- constructor-arg : 1개의 생성자 매개변수 설정 -->
+	    <constructor-arg>
+	        <value>120-120</value>
+	    </constructor-arg>
+	    <constructor-arg>
+	        <value>경기도 분당시</value>
+	    </constructor-arg>
+	</bean>
+	<bean id="address3" class="spring.di.vo.Address">
+	    <constructor-arg value="300-300"/>
+	    <constructor-arg value="서울시 종로구"/>
+	</bean>
+	
+	<bean id="address4" class="spring.di.vo.Address" c:zipcode="500-500" c:address="대전시 유성구"/>
+</beans>

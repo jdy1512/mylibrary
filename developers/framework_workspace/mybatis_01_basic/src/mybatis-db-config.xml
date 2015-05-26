@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+    
+    <!-- parameterType, resultType에 지정할 클래스이름(패키지명.type명)들에 별칭을 지정 -->
+    <typeAliases>
+        <!-- type : 별칭을 지정할 type지정, alias : 별칭지정 
+        <typeAlias type="mybatis.hr.vo.Department" alias="department"/>-->
+        
+        <!--
+        	package단위로 type 별칭을 설정
+        	name속성에 지정한 패키지 내의 모든 클래스들에 자동으로 별칭을 설정
+        	- 별칭 : Class이름(첫글자는 소문자)
+        -->
+        <package name="mybatis.hr.vo"/>
+        
+    </typeAliases>
+    
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <!-- 연결할 Database 정보 -->
+                <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>
+                <property name="username" value="scott"/>
+                <property name="password" value="tiger"/>
+                
+                <!-- Connection Pool 설정 -->
+                <property name="poolMaximumActiveConnections" value="50"/>
+                <property name="poolMaximumIdleConnections" value="30"/>
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <mappers>
+        <mapper resource="mybatis/hr/dao/config/departmentMapper.xml"/>
+        <mapper resource="mybatis/hr/dao/config/employeeMapper.xml"/>
+    </mappers>
+</configuration>

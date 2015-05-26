@@ -1,0 +1,24 @@
+package aop.core;
+
+import aop.cross.CrossCustingAspect;
+
+public class CoreServiceProxy {
+
+	public void coreMethod1() {
+		CoreServiceImpl core = new CoreServiceImpl();
+		CrossCustingAspect cross = new CrossCustingAspect();
+		// 핵심 로직 호출
+		core.coreMethod1();
+		// 공통 로직 호출
+		cross.commonMethod();
+	}
+	
+	public void coreMethod2() {
+		CoreServiceImpl core = new CoreServiceImpl();
+		CrossCustingAspect cross = new CrossCustingAspect();
+		// 핵심 로직 호출
+		core.coreMethod2();
+		// 공통 로직 호출
+		cross.commonMethod();
+	}
+}

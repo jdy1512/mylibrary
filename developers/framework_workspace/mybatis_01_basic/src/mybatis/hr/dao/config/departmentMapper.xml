@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	SQL문과 관련된 설정파일
+	* SQL + 파라미터 타입(?에 들어갈 값) + 어떤 값을 어떤 ?에 넣을지
+	-> select인 경우 : + 결과데이터(을 넣을) 타입
+ -->
+
+<!-- SQL 문과 관련된 설정파일 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.hr.dao.department">
+    
+    <sql id="department-select">
+        select department_id, department_name, location
+        from department
+    </sql>
+    
+    <select id="selectRandom" resultType="hashmap" parameterType="string">
+        select *
+        from ${value}
+    </select>
+    
+    <resultMap type="department" id="department-resultmap">
+        <!-- column : 조회컬럼-resultset기준, property : 조회값을 넣을 setter -->
+        <id column="department_id" property="departmentId"/><!-- pk 조회값 설정 -->
+        <result column="department_name" property="departmentName"/>
+        <result column="location" property="location"/>
+    </resultMap>
+    
+    <!-- 조회결과를 결과를 넣을 객체의 생성자를 통해 넣는 외부매핑 설정 -->
+    <resultMap type="department" id="department-constructor-resultmap">
+        <constructor>
+            <idArg column="department_id" javaType="_int"/><!-- 생성자 1번 매개변수에 department_id 조회값을 넣어라 -->
+            <arg column="department_name" javaType="string"/>
+            <arg column="location" javaType="string"/>
+        </constructor>
+    </resultMap>
+    
+    <select id="selectDepartmentByLocation" parameterType="string" resultMap="department-constructor-resultmap">
+        <include refid="department-select"/>
+        where location like '%${value}%'
+    </select>
+    
+    <select id="selectDepartmentByName" parameterType="string" resultMap="department-resultmap">
+        select department_id, department_name, location
+        from department
+        where department_name=#{value}
+    </select>
+    
+    <!-- SQL문 등록 -->
+    <!-- SQL문 호출 : namespace.sq_id(mybatis.hr.dao.department.insertDepartment -->
+    <insert id="insertDepartment" parameterType="mybatis.hr.vo.Department">
+        insert into department(department_id, department_name, location)
+         values(#{departmentId}, #{departmentName}, #{location})
+    </insert>
+    
+    <select id="selectDepartmentById" parameterType="int" resultType="java.util.HashMap">
+        select department_id, department_name, location
+        from department
+        where department_id=#{departmentId} --?가 하나일 경우(literal)내의 매핑값은 마음대로 줘도된다.
+    </select>
+    
+    <update id="updateDepartment" parameterType="mybatis.hr.vo.Department">
+        update department
+        set department_name=#{departmentName},
+        	location=#{location}
+        where department_id=#{departmentId}
+    </update>
+    
+    <delete id="deleteDepartmentById" parameterType="int">
+        delete department
+        where department_id=#{departmentId}
+    </delete>
+    
+    <delete id="deleteDepartmentByLocation" parameterType="String">
+        delete department
+        where location=#{location}
+    </delete>
+    
+    <select id="selectDepartmentsList" resultType="mybatis.hr.vo.Department">
+        select department_id departmentId, department_name departmentName, location from department
+    </select>
+    
+    <resultMap type="department" id="department_employee-resultmap">
+        <id column="department_id" property="departmentId" />
+        <result column="department_name" property="departmentName" />
+        <result column="location" property="location" />
+        <collection property="employees" ofType="employee">
+            <!-- Employee에 넣을 것들을 설정 -->
+            <id column="employee_id" property="employeeId" />
+            <result column="employee_name" property="employeeName" />
+            <result column="email" property="email" />
+            <result column="job_position" property="jobPosition" />
+            <result column="salary" property="salary" />
+            <result column="hire_date" property="hireDate" />
+            <result column="department_id" property="departmentId" />
+        </collection>
+    </resultMap>
+    
+    <resultMap type="department" id="department_employee-resultmap2" extends="department-resultmap">
+        <collection property="employees" ofType="employee" resultMap="mybatis.hr.dao.employee.employee-resultmap" />
+    </resultMap>
+    
+    <select id="selectDepartmentById_JoinEmployee" parameterType="_int" resultMap="department_employee-resultmap2">
+        select dept.department_id, dept.department_name, dept.location,
+			emp.employee_id, emp.employee_name, emp.email, emp.job_position, emp.salary, emp.hire_date
+		from department dept, employee emp
+		where dept.department_id=#{value} and dept.department_id=emp.department_id
+    </select>
+</mapper>

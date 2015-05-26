@@ -1,0 +1,5 @@
+package spring.aop.common;
+
+public class LoggerAspect {
+
+}

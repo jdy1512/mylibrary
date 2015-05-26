@@ -1,0 +1,15 @@
+package spring.aop.core;
+
+public class BusinessServiceImpl implements BusinessService {
+
+	@Override
+	public void businessMethodBefore1() {
+		System.out.println("핵심로직.methodBefore1()");
+	}
+
+	@Override
+	public void businessMethodBefore2(String name) {
+		System.out.println("핵심로직.methodBefore2()" + name + "을 받았습니다.");
+	}
+
+}

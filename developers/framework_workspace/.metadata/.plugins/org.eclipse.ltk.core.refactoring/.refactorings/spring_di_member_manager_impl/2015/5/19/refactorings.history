@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;MemberDAO.java&apos; to &apos;spring_di_member_manager_impl/src/member.model.dao&apos;&#x0D;&#x0A;- Original project: &apos;spring_di_member_manager_impl&apos;&#x0D;&#x0A;- Destination element: &apos;spring_di_member_manager_impl/src/member.model.dao&apos;&#x0D;&#x0A;- Original element: &apos;member.model.dao.MemberDAO.java&apos;" description="Copy compilation unit" destination="/src&lt;member.model.dao" element1="/src&lt;member.model.dao{MemberDAO.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1431059833743" units="1" version="1.0"/>
+</session>

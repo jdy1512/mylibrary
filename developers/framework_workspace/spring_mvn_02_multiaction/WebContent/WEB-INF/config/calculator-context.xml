@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+    <bean name="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver"
+        p:paramName="command"/>
+    <!-- controller메소드 구분자로 요청파라미터 이름으로 command 사용 -->
+    
+	<bean class="spring.calc.controller.CalculatorController" name="/calc.do"
+	    p:methodNameResolver-ref="methodNameResolver"/>
+</beans>

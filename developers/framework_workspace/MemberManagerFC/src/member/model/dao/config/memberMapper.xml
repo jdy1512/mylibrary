@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member.model.dao.member">
+  
+ 	<sql id="member-select">
+	 	select id, 
+	    	   password, 
+	    	   name, 
+	    	   email, 
+	    	   join_date 
+	   	from member 
+ 	</sql>
+ 	
+	<!--  result map 기본 -->
+	 <resultMap type="member" id="member-result">
+	 	<id column="id" property="id"/>
+	 	<result column="password" property="password"/>
+	 	<result column="name" property="name"/>
+	 	<result column="email" property="email"/>
+	 	<result column="join_date"	property="joinDate"/>
+	 </resultMap>
+	 
+	<!-- ID로 조회 -->
+	 
+	  <select id="selectMemberById" parameterType="string" resultMap="member-result">
+		<include refid="member-select"/>
+	    	where id=#{value}
+	  </select>
+	  
+	<!--  member등록 -->
+	  <insert id="insertMember" parameterType="member">
+	  	insert into member (id, password, name, email, join_date)
+	  	values (#{id},#{password},#{name},#{email},to_char(sysdate, 'yyyymmdd'))
+	  </insert>
+	  
+	<!-- 전체 회원 정보 조회 -->
+	  <select id="selectAllMember" resultMap="member-result">
+		<include refid="member-select"/>
+	  </select>
+	  
+	 <!-- member 업데이트 -->
+	 <update id="updateMember" parameterType="member">where page=2
+		 update member 
+		 set password=#{password}, name=#{name}, email=#{email} 
+		 where id=#{id}
+	 </update>
+	 
+	 <!-- member 삭제 -->
+	 <delete id="deleteMemberById" parameterType="string">
+	 	delete from member where id=#{id}
+	 </delete>
+	 
+	 <!-- 전체 회원 paging 조회 -->
+	 <select id="selectAllMemberPaging" parameterType="Map" resultMap="member-result">
+	 	select id, password, name, email, join_date
+		from (
+				select ceil(rownum/#{CONTENTS_PER_PAGE}) page, id, password, name, email, join_date
+				from (
+					select  id, password, name, email, join_date 
+					from member
+					order by join_date
+				)
+		)
+		where page = #{pageNo}
+	 </select>
+	 
+	 <select id ="selectTotalMemberCount" resultType="int">
+	 	select count(*)
+	 	from member
+	 </select>
+</mapper>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="department">
+    <select id="selectDepartmentsList" resultType="sample.Department">
+        select department_id departmentId, department_name departmentName, location from department
+    </select>
+</mapper>

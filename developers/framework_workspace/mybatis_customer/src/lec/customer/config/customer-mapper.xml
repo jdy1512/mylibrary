@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="customer">
+    
+    <!-- common sql -->
+    <sql id="selectAllAttributeInCustomer">
+        select id, password, name, email, phone_number, mileage
+        from customer
+    </sql>
+    
+    <!-- result map -->
+    <resultMap type="customer" id="selectAllCustomer-Map">
+        <constructor>
+	        <idArg column="id" javaType="string"/>
+	        <arg column="password" javaType="string"/>
+	        <arg column="name" javaType="string"/>
+	        <arg column="email" javaType="string"/>
+	        <arg column="phone_number" javaType="string"/>
+	        <arg column="mileage" javaType="_int"/>
+        </constructor>
+    </resultMap>
+    
+    <!-- select -->
+    <select id="selectCustomerById" parameterType="string" resultMap="selectAllCustomer-Map">
+        <include refid="selectAllAttributeInCustomer"/>
+        where id=#{value}
+    </select>
+    
+    <select id="selectCustomerByName" parameterType="string" resultMap="selectAllCustomer-Map">
+        <include refid="selectAllAttributeInCustomer"/>
+        where name=#{value}
+    </select>
+    
+    <select id="selectCustomerByEmail" parameterType="string" resultMap="selectAllCustomer-Map">
+        <include refid="selectAllAttributeInCustomer"/>
+        where email=#{value}
+    </select>
+    
+    <select id="selectCustomerByMileageRange" parameterType="int[]" resultMap="selectAllCustomer-Map">
+        <include refid="selectAllAttributeInCustomer"/>
+        where mileage between #{array[0]} and #{array[1]}
+    </select>
+    
+    <!-- update -->
+    <update id="udpateCustomer" parameterType="customer">
+        update customer
+        set password=#{customerPassword}, name=#{customerName}, email=#{customerEmail}, phone_number=#{customerPhoneNo}, mileage=#{customerMileage}
+        where id=#{customerId}
+    </update>
+    
+    <!-- delete -->
+    <delete id="deleteCustomerById" parameterType="string">
+        delete from customer
+        where id=#{value}
+    </delete>
+    
+    <!-- insert -->
+    <insert id="insertCustomer" parameterType="customer">
+        insert into customer
+        values(#{customerId}, #{customerPassword}, #{customerName}, #{customerEmail}, #{customerPhoneNo}, #{customerMileage})
+    </insert>
+    
+</mapper>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;lec.customer.dao.customerDAO.java&apos; to &apos;CustomerDAO.java&apos;&#x0D;&#x0A;- Original project: &apos;mybatis_customer&apos;&#x0D;&#x0A;- Original element: &apos;lec.customer.dao.customerDAO.java&apos;&#x0D;&#x0A;- Renamed element: &apos;lec.customer.dao.CustomerDAO.java&apos;" description="Rename compilation unit &apos;customerDAO.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;lec.customer.dao{customerDAO.java" name="CustomerDAO.java" references="false" stamp="1429859956838" version="1.0"/>
+</session>

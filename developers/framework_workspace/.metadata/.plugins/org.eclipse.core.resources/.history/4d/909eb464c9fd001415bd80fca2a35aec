@@ -1,0 +1,35 @@
+package spring.mvc.interceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+public class FirstInterceptor implements HandlerInterceptor{
+
+	@Override
+	// 사용자 요청과 관련된 모든 요청이 다 끝난 뒤 호출됨.
+	// controller, view에서 예외가 던져져도 실행된다.
+	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
+			throws Exception {
+		System.out.println("afterCompletion 실행");
+	}
+
+	@Override
+	// Controller에서 예외가 발생한 경우(처리안되고 던져진 경우)는 호출 되지 않는다.
+	// 3 - Controller객체, 4 - Controller가 return ModelAndView
+	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3) throws Exception {
+		System.out.println("postHandle 실행");
+		
+	}
+
+	@Override
+	// false 리턴시 controller는 호출되지 않는다.
+	// 3번 매개변수 : Controller 객체
+	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2) throws Exception {
+		System.out.println("preHandle 실행");
+		return false;
+	}
+	
+}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="publisher">
+    
+	<!-- insert -->
+	<insert id = "insertPublisher" parameterType="publisher">
+    	<selectKey keyProperty="pNo" resultType="_int" order="BEFORE">
+    		select publisher_no_seq.nextval from dual
+    	</selectKey>
+    	insert into publisher values(#{pNo}, #{pName}, #{pAddr}, #{pTel})
+   	</insert>
+	
+	<!-- delete -->
+	<delete id="deletePublisherByNo" parameterType="_int">
+	    delete from publisher
+	    where publisher_no=#{value}
+	</delete>
+	
+	<!-- update -->
+	<update id="updatePublisher" parameterType="publisher">
+	    update publisher
+	    <set>
+	    	<if test="pName!=null">publisher_name=#{pName},</if>
+	    	<if test="pAddr!=null">publisher_address=#{pAddr},</if>
+	    	<if test="pTel!=null">publisher_tel=#{pTel}</if>
+	    </set>
+	    where publisher_no=#{pNo}
+	</update>
+	
+	<update id="updatePublisher2" parameterType="publisher">
+	    update publisher set
+	    	publisher_name=#{pName, jdbcType=VARCHAR},
+	    	publisher_address=#{pAddr, jdbcType=VARCHAR},
+	    	publisher_tel=#{pTel, jdbcType=VARCHAR}
+	    where publisher_no=#{pNo}
+	</update>
+	
+	<!-- result-map -->
+	<resultMap type="publisher" id="publisher-map">
+	    <id column="publisher_no" property="pNo"/>
+	    <result column="publisher_name" property="pName"/>
+	    <result column="publisher_address" property="pAddr"/>
+	    <result column="publisher_tel" property="pTel"/>
+	</resultMap>
+	<resultMap type="publisher" id="publisher-book-map">
+	    <id column="publisher_no" property="pNo"/>
+	    <result column="publisher_name" property="pName"/>
+	    <result column="publisher_address" property="pAddr"/>
+	    <result column="publisher_tel" property="pTel"/>
+	    <collection property="books" ofType="book" resultMap="book.book-map"></collection>
+	</resultMap>
+	
+	<!-- select -->
+	<select id="selectAllPublishers" resultMap="publisher-map">
+	    select publisher_no, publisher_name, publisher_address, publisher_tel from publisher
+	</select>
+	
+	<select id="selectPublishersByAddress" parameterType="string" resultMap="publisher-map">
+	    select publisher_no, publisher_name, publisher_address, publisher_tel from publisher
+	    where publisher_address like '%${value}%'
+	</select>
+	
+	<select id="selectPublishersByNo" parameterType="_int" resultMap="publisher-book-map">
+	    select p.publisher_no, p.publisher_name, p.publisher_address, p.publisher_tel, isbn, title, author, page, price, publish_date, b.publisher_no from book b, publisher p
+	    where b.publisher_no=p.publisher_no and b.publisher_no=#{value}
+	</select>
+	
+	<!-- keyword 조회
+		keyword종류 - keyword(name-우리출판사)
+		keyword종류(publisherName, publisherAddress, publisherTel)
+		keyword종류가 있는 것만 where절 조건에 넣어 검색
+	 -->
+	 <select id="selectPublishersByKeywords" parameterType="map" resultMap="publisher-map">
+	 	select publisher_no, publisher_name, publisher_address, publisher_tel from publisher
+	 	<where>
+		 	<if test="pName != null"><!-- parameter객체의 publisherName(key)가 null이 아니면 -->
+		 	    publisher_name = #{pName}
+		 	</if>
+		 	<if test="pAddr != null">
+		 	    publisher_address like '%'||#{pAddr}||'%'
+		 	</if>
+		 	<if test="pTel != null">
+		 	    publisher_tel = #{pTel}
+		 	</if>
+	 	</where>
+	 </select>
+
+	<select id="selectPublisherByKeyword" parameterType="map" resultMap="publisher-map">
+		select publisher_no, publisher_name, publisher_address, publisher_tel from publisher
+		<where>
+			<choose>
+				<when test="pName!=null and pName!='' ">
+					publisher_name = #{pName}
+				</when>
+				<when test="pAddr!=null and pAddr!='' ">
+					publisher_address= #{pAddr}
+				</when>
+				<otherwise>
+					publisher_name is null and publisher_address is null
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+	
+	<select id="selectPublisherByName" parameterType="map" resultMap="publisher-map">
+		select publisher_no, publisher_name, publisher_address, publisher_tel from publisher
+	    <where>
+	        publisher_name in
+	        <foreach collection="names" item="name" open="(" close=")" separator=",">
+	            #{name}
+	        </foreach>
+	    </where>
+	</select>
+	
+</mapper>

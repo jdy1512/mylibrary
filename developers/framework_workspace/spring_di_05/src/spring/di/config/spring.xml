@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+    <!-- scope : prototype이면 testVO 이름으로 호출 될 때 마다 TestVO객체를 생성해서 리턴 -->
+	<bean name="testVO" class="spring.di.vo.TestVO" scope="prototype"/>
+</beans>

@@ -1,0 +1,12 @@
+1430193054312	Rename package 'publisher.dao'
+1430193113707	Move file
+1430193152991	Delete element
+1430195078513	Copy compilation unit
+1430195084382	Rename type 'BookInfoDAO'
+1430195098518	Copy file
+1430195106238	Delete element
+1430195111021	Rename resource 'book-info-mapper.xml'
+1430195116226	Copy file
+1430197196007	Rename type 'PublisherService'
+1430197202469	Rename type 'MyService'
+1430197211251	Rename type 'Service'

@@ -1,0 +1,12 @@
+import aop.core.CoreServiceProxy;
+
+
+public class TestAOP {
+
+	public static void main(String[] args) {
+		CoreServiceProxy proxy = new CoreServiceProxy();
+		proxy.coreMethod1();
+		System.out.println("----------------------------");
+		proxy.coreMethod2();
+	}
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+	 
+	<context:component-scan base-package="com.mycom.member.model"/>
+
+	<!-- BasicDataSource -> SqlSessionFactoryBean -> SqlSessionTemplate -> MemberDAOImpl -->
+	<bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	    p:driverClassName="oracle.jdbc.driver.OracleDriver"
+	    p:url="jdbc:oracle:thin:@127.0.0.1:1521:XE"
+	    p:username="scott"
+	    p:password="tiger"/>
+	<!-- SqlSessionFactoryBean 설정 : SqlSessionFactory를 생성해주는 FactoryBean - DataSource, mybatis 설정 정보 -> SqlSessionTemplate으로 주입됨 -->
+	<bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+	    p:configLocation="com/mycom/common/config/mybatis-config.xml"
+	    p:dataSource-ref="dataSource"/>
+	
+	<!-- 
+		SqlSessionTemplate : SqlSession의 구현 클래스.
+		 - Mybatis의 SqlSessionFactory.openSession()으로 받은 SqlSession 객체의 역할
+		 - 차이점 : Transaction 처리를 Spring단에서 처리하도록 설계됨. (commit()을 하지 않는다. close()작업이 필요없다.)
+		 - SqlSessionFactoryBean을 생성자를 통해 주입 받는다. -> DAO로 주입된다.
+	 -->
+	 
+	 <bean name="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+	     c:sqlSessionFactory-ref="sqlSessionFactory"/>
+	 
+	 <!-- Transaction 설정
+	 	1. TransactionManager class를 bean으로 등록 - property로 dataSource(Mybatis에서 사용하는 것과 동일한)를 주입
+	 	2. 1의 bean을 transaction manager로 등록. - tx : namespace(스키마)
+	 -->
+	 <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+	     p:dataSource-ref="dataSource"/>
+	 
+	 <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

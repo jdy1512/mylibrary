@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+	<!-- 
+		AOP 설정 - aop 스키마(Namespace) 추가 
+		aop 설정의 root 태그 - aop:config
+	-->
+	<aop:config>
+	    
+	</aop:config>
+	
+	<!-- 핵심 비지니스 로직을 가진 bean : Target -->
+	<bean name="businessService" class="spring.aop.core.BusinessServiceImpl"/>
+	
+	<!-- 공통 로직 처리 bean 설정 -->
+	<bean name="logger" class="spring.aop.common.LoggerAspect"/>
+</beans>

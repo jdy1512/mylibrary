@@ -1,0 +1,5 @@
+package aop.cross;
+
+public class CrossCustingAspect {
+
+}

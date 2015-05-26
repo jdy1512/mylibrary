@@ -1,0 +1,5 @@
+package spring.aop.core;
+
+public class BusinessServiceImpl implements BusinessService {
+
+}

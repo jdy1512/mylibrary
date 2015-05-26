@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+		<list key="ciManagementUrl">
+		</list>
+		<list key="ciManagementSystem">
+		</list>
+		<list key="issueManagementSystem">
+		</list>
+		<list key="issueManagementUrl">
+		</list>
+	</section>
+	<section name="wizardPage">
+		<list key="groupId">
+			<item value="spring_aop_01"/>
+			<item value="spring_mvc_tiles_template"/>
+			<item value="spring_mvc_06_interceptor"/>
+			<item value="spring_mvc_05_fileUpload"/>
+			<item value="spring_mvc_04_ajax"/>
+			<item value="spring_mvc_03_annotation"/>
+			<item value="spring_mvn_02_multiaction"/>
+			<item value="spring_mvc_01_basic"/>
+			<item value="kr.or.kosta"/>
+			<item value="KonHello"/>
+			<item value="MemberManagement"/>
+			<item value="publisher"/>
+			<item value="mybatis_customer"/>
+			<item value="test_mvn"/>
+		</list>
+		<list key="name">
+		</list>
+		<list key="artifactId">
+			<item value="spring_aop_01"/>
+			<item value="spring_mvc_tiles_template"/>
+			<item value="spring_mvc_06_interceptor"/>
+			<item value="spring_mvc_05_fileUpload"/>
+			<item value="spring_mvc_04_ajax"/>
+			<item value="spring_mvc_03_annotation"/>
+			<item value="spring_mvn_02_multiaction"/>
+			<item value="spring_mvc_01_basic"/>
+			<item value="mybatis_spring_template"/>
+			<item value="spring_di_05"/>
+			<item value="spring_di_02"/>
+			<item value="KonHello"/>
+			<item value="MemberManagement"/>
+			<item value="publisher"/>
+			<item value="mybatis_customer"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+</section>

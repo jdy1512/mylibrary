@@ -1,0 +1,15 @@
+package aop.core;
+
+public class CoreServiceImpl implements CoreService{
+	
+	@Override
+	public void coreMethod1() {
+		System.out.println("핵심 로직 1이 실행됨"); // 핵심 Business Logic
+		
+	}
+	
+	public void coreMethod2() {
+		System.out.println("핵심 로직 2이 실행됨"); // 핵심 Business Logic
+		
+	}
+}

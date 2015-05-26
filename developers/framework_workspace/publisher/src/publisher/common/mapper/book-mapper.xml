@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="book">
+    
+	<!-- insert -->
+	<insert id = "insertBook" parameterType="book">
+    	insert into book values(#{isbn}, #{title}, #{author}, #{page}, #{price}, #{pDate}, #{pNo})
+   	</insert>
+	
+	<!-- delete -->
+	<delete id="deleteBookByISBN" parameterType="string">
+	    delete from book
+	    where isbn=#{value}
+	</delete>
+	
+	<!-- update -->
+	<update id="updateBook" parameterType="book">
+	    update book set
+	    	title=#{title},
+	    	author=#{author},
+	    	page=#{page},
+	    	price=#{price},
+	    	publish_date=#{pDate},
+	    	publisher_no=#{pNo}
+	    where isbn=#{isbn}
+	</update>
+   	
+	<!-- result-map -->
+	<resultMap type="book" id="book-map">
+	    <id column="isbn" property="isbn"/>
+	    <result column="title" property="title"/>
+	    <result column="author" property="author"/>
+	    <result column="page" property="page"/>
+	    <result column="price" property="price"/>
+	    <result column="publish_date" property="pDate"/>
+	    <result column="publisher_no" property="pNo"/>
+	</resultMap>
+	
+	<resultMap type="book" id="book-publisher-map">
+	    <id column="isbn" property="isbn"/>
+	    <result column="title" property="title"/>
+	    <result column="author" property="author"/>
+	    <result column="page" property="page"/>
+	    <result column="price" property="price"/>
+	    <result column="publish_date" property="pDate"/>
+	    <result column="publisher_no" property="pNo"/>
+	    <association property="publisher" javaType="publisher" resultMap="publisher.publisher-map"></association>
+	</resultMap>
+	
+	<!-- select -->
+	<select id="selectAllBooks" resultMap="book-map">
+	    select isbn, title, author, page, price, publish_date, publisher_no from book
+	</select>
+	
+	<select id="selectBooksByAuthor" parameterType="string" resultMap="book-map">
+	    select isbn, title, author, page, price, publish_date, publisher_no from book
+	    where author=#{value}
+	</select>
+	
+	<select id="selectBooksByDate" parameterType="java.sql.Date" resultMap="book-map">
+	    select isbn, title, author, page, price, publish_date, publisher_no from book
+	    where publish_date between #{array[0]} and #{array[1]}
+	</select>
+	
+	<select id="selectBooksByISBN" parameterType="string" resultMap="book-publisher-map">
+	    select isbn, title, author, page, price, publish_date, b.publisher_no, p.publisher_no, p.publisher_name, p.publisher_address, p.publisher_tel
+	    from book b, publisher p
+	    where b.publisher_no=p.publisher_no and isbn=#{value}
+	</select>
+</mapper>

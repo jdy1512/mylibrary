@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.hr.dao.employee">
+    
+    <resultMap type="employee" id="employee-resultmap">
+        <id column="employee_id" property="employeeId"/>
+        <result column="employee_name" property="employeeName"/>
+        <result column="email" property="email"/>
+        <result column="job_position" property="jobPosition"/>
+        <result column="salary" property="salary"/>
+        <result column="hire_date" property="hireDate"/>
+        <result column="department_id" property="departmentId"/>
+        <association property="department" javaType="department" resultMap="mybatis.hr.dao.department.department-resultmap"/>
+    </resultMap>
+    
+    <select id="selectAllEmployees" resultMap="employee-resultmap">
+        select emp.employee_id, emp.employee_name, emp.email, emp.job_position, emp.salary, emp.hire_date, emp.department_id,
+			dept.department_name, dept.location
+		from employee emp, department dept
+		where emp.department_id=dept.department_id
+    </select>
+</mapper>
